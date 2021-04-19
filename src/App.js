@@ -1,24 +1,23 @@
-import logo from './logo.svg';
+import React from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
 import './App.css';
+import LanguageChart from './components/language_chart'
+import CopyToClipboard from './components/copy_to_clipboard';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+       <div className="header">
+        <Link to="/language-chart">Language Chart </Link>
+        <Link to="/copy-to-clipboard">Copy To Clipboard </Link>
+      </div>
+      <Switch>
+        <Route path="/language-chart" component={LanguageChart} />
+        <Route path="/copy-to-clipboard" component={CopyToClipboard} />
+        <Route path="/" component={LanguageChart}/>
+      </Switch>
+    </main>
   );
 }
 

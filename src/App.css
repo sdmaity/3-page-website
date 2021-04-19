@@ -1,38 +1,112 @@
-.App {
-  text-align: center;
+.chart-wrapper {
+  display: flex;
+  height: 55vh;
+  justify-content: space-around;
+  margin-top: 70px;
+  margin-right: 40px;
+  border-bottom: 1px solid black;
+  width: fit-content;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.chart-wrapper .bar-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  max-width: 50px;
+  min-width: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: relative;
+}
+
+.chart-wrapper .bar-wrapper .bar {
+  background-color: lightblue;
+  position: relative;
+}
+
+.chart-wrapper .bar-wrapper .bar .show-count {
+  position: absolute;
+  top: -20px;
+  transform: rotate(-45deg);
+  left: 45%;
+  right: 50%;
+}
+
+.chart-wrapper .bar-wrapper .show-name {
+  position: absolute;
+  bottom: -20px;
+  white-space: nowrap;
+  transform: rotate(45deg);
+  left: 50%;
+  right: 50%;
+}
+
+.api-control-fields {
+  margin: 5px;
+}
+
+.api-control-fields > button {
+  display: inline-block;
+}
+
+.api-control-field {
+  width: 23%;
+  display: inline-block;
+  min-width: 150px;
+}
+
+.api-control-field>label{
+  margin-right: 10px;
+}
+
+.loader {
+  position: absolute;
+  width: 100%;
+  height: 99%;
+  background-color: white;
+  z-index: 2;
+  font-size: 40px;
+  display: flex;
+  opacity: 0.7;
+}
+
+.loader>h1 {
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+}
+
+.header {
+  background-color: aliceblue;
+  height: 30px;
+  display: flex;
+}
+
+.header a {
+  height: 100%;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 0 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.copy-to-clipboard {
+  padding: 10px 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.copy-to-clipboard .textarea-wrapper, .copy-to-clipboard .show-q-wrapper {
+  display: flex;
+}
+
+.copy-to-clipboard .show-q-wrapper {
+  margin-top: 10px;
+}
+
+.copy-to-clipboard .textarea-wrapper>input, .copy-to-clipboard .show-q-wrapper>.show-q {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.copy-to-clipboard .textarea-wrapper>button, .copy-to-clipboard ..show-q-wrapper>button {
+  flex-shrink: 0;
 }
