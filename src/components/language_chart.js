@@ -4,21 +4,27 @@ import '../App.css';
 export default class LanguageChart extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            pagesize: 30,
-            loading: true
+
+        let previousState = localStorage.getItem('inputValues');
+        console.log(previousState);
+        this.state = previousState ? JSON.parse(previousState) : {
+            pagesize: 10,
+            page: 1
         };
+        this.state['loading'] = true;
         this.totalWidth = window.innerWidth - 35;
         this.handleChange = this.handleChange.bind(this);
         this.apiCall = this.apiCall.bind(this);
+        this.saveToPersist = this.saveToPersist.bind(this);
     }
   
     apiCall() {
         this.setState({
-        loading: true
+            loading: true
         });
+        console.log('api', this.state);
         let queryParams = '&pagesize=' + (this.state.pagesize || 30) + '&page=' + (this.state.page || '')
-        + '&fromdate=' + (this.state.fromdate || '') + '&todate=' + (this.state.todate || '');
+        + '&fromdate=' + (this.state.fromdate ? (new Date(this.state.fromdate).getTime()/1000) : '') + '&todate=' + (this.state.todate ? (new Date(this.state.todate).getTime()/1000) : '');
         fetch('https://api.stackexchange.com/2.2/tags?order=desc&sort=popular&site=stackoverflow' + queryParams)
         .then(res => res.json())
         .then(result => {
@@ -48,13 +54,22 @@ export default class LanguageChart extends React.Component {
   
     handleChange(e) {
         let value = e.target.value;
-        if (value && e.target.type === 'date') {
-            value = new Date(value).getTime()/1000;
-        }
-        this.setState({
-            [e.target.name]: value
+        this.setState(state => {
+            let copyState = {...state};
+            copyState[e.target.name] = value;
+            this.saveToPersist(copyState);
+            return copyState;
         });
     }
+
+    saveToPersist(curState) {
+        let inputValues = {...curState};
+        delete inputValues.loading;
+        delete inputValues.data;
+        localStorage.setItem('inputValues', JSON.stringify(inputValues));
+    }
+
+    
   
     render() {
         return (<div>
@@ -62,19 +77,19 @@ export default class LanguageChart extends React.Component {
             <div className="api-control-fields">
             <div className="api-control-field">
                 <label>From Date:</label>
-                <input type="date" name="fromdate" onChange={this.handleChange}/>
+                <input type="date" name="fromdate" value={this.state.fromdate} onChange={this.handleChange}/>
             </div>
             <div className="api-control-field">
                 <label>To Date:</label>
-                <input type="date" name="todate" onChange={this.handleChange}/>
+                <input type="date" name="todate"  value={this.state.todate} onChange={this.handleChange}/>
             </div>
             <div className="api-control-field">
                 <label>Page Size:</label>
-                <input type="number" name="pagesize" defaultValue="30" onChange={this.handleChange}/>
+                <input type="number" name="pagesize" value={this.state.pagesize} onChange={this.handleChange}/>
             </div>
             <div className="api-control-field">
                 <label>Page:</label>
-                <input type="number" name="page" onChange={this.handleChange}/>
+                <input type="number" name="page" value={this.state.page} onChange={this.handleChange}/>
             </div>
             <button type="submit" onClick={this.apiCall}>Submit</button>
             </div>

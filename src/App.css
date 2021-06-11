@@ -110,3 +110,30 @@
 .copy-to-clipboard .textarea-wrapper>button, .copy-to-clipboard ..show-q-wrapper>button {
   flex-shrink: 0;
 }
+
+.progrress-bar {
+  display: flex;
+  width: 100%;
+  height: 20px;
+  margin-top: 10px;
+}
+
+.progrress-bar > div {
+  background-color: red;
+  height: 100%;
+  position: relative;
+  animation-name: example;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes example {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
